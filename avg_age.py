@@ -13,9 +13,7 @@ helper_data = con.read_csv(helper_file)
 
 data = main_data.join(other_rel=helper_data, how="left", condition="ortsbezirk_id")
 
-invalid = data.filter("ortsbezirk_name is null").select(
-    "wahlbezirk_id, ortsbezirk_id, ortsbezirk_name"
-)
+invalid = data.filter("ortsbezirk_name is null").select("wahlbezirk_id, ortsbezirk_id")
 filename = "Nicht-matchbare_wahlbezirke.csv"
 invalid.write_csv(filename)
 print(f"Nicht-matchbare Wahlbezirke in '{filename}' exportiert")

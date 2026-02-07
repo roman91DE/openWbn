@@ -31,13 +31,15 @@ melted = df.unpivot(
     variable_name="qm",
     value_name="median_preis",
 ).with_columns(
-    pl.col("qm").replace({
-        "durchschnittsmiete_median_in_euro_0_40_qm": "0–40 qm",
-        "durchschnittsmiete_median_in_euro_40_60_qm": "40–60 qm",
-        "durchschnittsmiete_median_in_euro_60_80_qm": "60–80 qm",
-        "durchschnittsmiete_median_in_euro_80_100_qm": "80–100 qm",
-        "durchschnittsmiete_median_in_euro_100_qm": "100+ qm",
-    })
+    pl.col("qm").replace(
+        {
+            "durchschnittsmiete_median_in_euro_0_40_qm": "0–40 qm",
+            "durchschnittsmiete_median_in_euro_40_60_qm": "40–60 qm",
+            "durchschnittsmiete_median_in_euro_60_80_qm": "60–80 qm",
+            "durchschnittsmiete_median_in_euro_80_100_qm": "80–100 qm",
+            "durchschnittsmiete_median_in_euro_100_qm": "100+ qm",
+        }
+    )
 )
 
 chart = (

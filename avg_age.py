@@ -29,8 +29,7 @@ agg_cols = [
     "durchschnittsalter_personen_mit_migrationshintergrund",
 ]
 
-query = """
-SELECT
+aggregation_expression = """
     ortsbezirk_name,
     AVG({0}) AS avg_age_all,
     STDDEV_POP({0}) AS std_age_all,
@@ -44,12 +43,6 @@ SELECT
     STDDEV_POP({4}) AS std_age_foreign,
     AVG({5}) AS avg_age_migrated,
     STDDEV_POP({5}) AS std_age_migrated
-FROM
-    matched
-GROUP BY
-    ALL
-ORDER BY
-    avg_age_all
 """.format(*agg_cols)
 
-result = con.sql(query)
+result = matched.aggregate(aggregation_expression, group_expr="ALL")

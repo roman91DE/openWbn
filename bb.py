@@ -4,7 +4,7 @@ import duckdb
 file = "./bb_regwbz.csv"
 helper_file = "./ortsbezirke_wiesbaden.csv"
 
-con = duckdb.connect()
+con = duckdb.connect("bb.duckdb")
 main_data = con.read_csv(file, decimal=",").select(
     "*, substr(wahlbezirk_id, 1, 2) AS ortsbezirk_id"
 )
@@ -17,3 +17,9 @@ matched = data.filter("ortsbezirk_name IS NOT NULL")
 res = matched.select(
     "wahlbezirk_id, ortsbezirk_name, personen_mit_migrationshintergrund / bevoelkerungsbestand AS anteil_migration,auslaender_innen / bevoelkerungsbestand AS anteil_auslaender "
 ).order("anteil_migration DESC")
+
+res.create("Results")
+main_data.create("Raw")
+
+
+con.close()
